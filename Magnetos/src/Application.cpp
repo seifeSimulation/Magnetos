@@ -11,14 +11,19 @@ int main()
 }
 */
 
-
+#include<GL/glew.h>
 #include <GLFW/glfw3.h>
 //#pragma comment(lib, "opengl32.lib")
+
+void error_callback(int error, const char* description)
+{
+    fprintf(stderr, "Error: %s\n", description);
+}
 
 int main(void)
 {
     GLFWwindow* window;
-
+    glfwSetErrorCallback(error_callback);
     /* Initialize the library */
     if (!glfwInit())
         return -1;
@@ -33,6 +38,10 @@ int main(void)
 
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
+
+    if (glewInit() != GLEW_OK)
+       std::cout << "Error!" << std::endl;
+    std::cout << glGetString(GL_VERSION) << std::endl;
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
